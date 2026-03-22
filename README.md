@@ -11,7 +11,7 @@ researchers who run local LLMs. Plain Markdown in, sanitized JSON out.
 ## What Kura Does
 
 - **Stores notes as plain Markdown** — no lock-in, works with vim, VS Code, Obsidian
-- **Japanese full-text search** — kuromoji.js morphological analysis + SQLite FTS5
+- **Full-text search** — English and Japanese supported (Chinese coming soon). SQLite FTS5 with language-aware tokenization
 - **Ranks by freshness** — time-decay ranking so recent notes surface first
 - **Sanitizes before serving** — strips hidden instructions and flags injection patterns before your agent sees them
 
@@ -143,7 +143,7 @@ src/
 └── utils/      # Utilities
 ```
 
-**Stack:** Bun, SQLite FTS5, kuromoji.js, Hono, HTMX
+**Stack:** Bun, SQLite FTS5, kuromoji.js (Japanese), Intl.Segmenter (Chinese), Hono, HTMX
 
 ## License
 
