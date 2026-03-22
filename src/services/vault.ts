@@ -82,11 +82,10 @@ export function initVault(vaultRoot: string): VaultPaths {
   // デフォルト設定ファイルを作成
   const defaultConfig = `[vault]
 name = "main"
-language = "ja"
+language = "en"  # "en" | "ja" | "zh"
 
 [search]
-tokenizer = "kuromoji"
-decay_rate = 0.01  # 時間減衰率（大きいほど古いノートが早く沈む）
+decay_rate = 0.01  # Higher = older notes rank lower
 
 [serve]
 port = 3847

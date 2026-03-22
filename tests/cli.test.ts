@@ -6,7 +6,7 @@
  */
 
 import { describe, test, expect, beforeEach, afterEach } from "bun:test";
-import { rmSync, existsSync, writeFileSync } from "fs";
+import { rmSync, existsSync, writeFileSync, readFileSync } from "fs";
 import path from "path";
 
 const TEST_DIR = path.join(import.meta.dir, "../.test-cli-tmp");
@@ -34,6 +34,10 @@ describe("CLI統合テスト", () => {
     if (initResult.exitCode !== 0) {
       throw new Error(`init failed: ${initResult.stderr.toString()}`);
     }
+    // テストは日本語検索を使うのでlanguageをjaに設定
+    const configPath = path.join(TEST_DIR, ".kura", "config.toml");
+    const config = readFileSync(configPath, "utf-8").replace('language = "en"', 'language = "ja"');
+    writeFileSync(configPath, config, "utf-8");
   });
 
   afterEach(() => {

@@ -11,6 +11,7 @@ import { findVaultRoot, getVaultPaths } from "../../services/vault.ts";
 import { searchNotes } from "../../services/search.ts";
 import { sanitizeContent } from "../../services/sanitizer.ts";
 import { loadConfig } from "../../services/config.ts";
+import { initTokenizer } from "../../services/tokenizer.ts";
 
 export const searchCommand = new Command("search")
   .description("ノートを全文検索する")
@@ -28,6 +29,7 @@ export const searchCommand = new Command("search")
     const paths = getVaultPaths(vaultRoot);
     const limit = parseInt(options.limit, 10);
     const config = loadConfig(paths);
+    initTokenizer(config.vault.language);
 
     try {
       const { results, meta } = await searchNotes(paths, query, limit, config.search.decayRate);

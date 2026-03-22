@@ -37,7 +37,7 @@ describe("loadConfig", () => {
     const config = loadConfig(paths);
     expect(config.search.decayRate).toBe(0.01);
     expect(config.serve.port).toBe(3847);
-    expect(config.vault.language).toBe("ja");
+    expect(config.vault.language).toBe("en");
   });
 
   test("config.tomlからdecay_rateを読み込む", () => {

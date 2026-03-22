@@ -30,8 +30,8 @@ export interface VaultConfig {
 
 /** デフォルト設定 */
 const DEFAULTS: VaultConfig = {
-  vault: { name: "main", language: "ja" },
-  search: { tokenizer: "kuromoji", decayRate: 0.01 },
+  vault: { name: "main", language: "en" },
+  search: { tokenizer: "auto", decayRate: 0.01 },
   daily: { directory: "daily" },
   serve: { port: 3847, openBrowser: true },
 };

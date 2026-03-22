@@ -5,7 +5,7 @@
  */
 
 import { describe, test, expect, beforeAll, afterAll } from "bun:test";
-import { mkdirSync, writeFileSync, rmSync, existsSync } from "fs";
+import { mkdirSync, writeFileSync, rmSync, existsSync, readFileSync } from "fs";
 import path from "path";
 import { initVault, getVaultPaths } from "../src/services/vault.ts";
 import { rebuildIndex } from "../src/services/indexer.ts";
@@ -27,6 +27,11 @@ describe("REST API", () => {
     if (existsSync(TEST_VAULT)) rmSync(TEST_VAULT, { recursive: true });
     mkdirSync(TEST_VAULT, { recursive: true });
     initVault(TEST_VAULT);
+
+    // テストは日本語ノートを使うのでlanguageをjaに設定
+    const configPath = path.join(TEST_VAULT, ".kura", "config.toml");
+    const config = readFileSync(configPath, "utf-8").replace('language = "en"', 'language = "ja"');
+    writeFileSync(configPath, config, "utf-8");
 
     // テスト用ノート作成
     writeNote("public-note.md", `---

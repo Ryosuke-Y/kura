@@ -9,6 +9,8 @@
 import { Command } from "commander";
 import { findVaultRoot, getVaultPaths } from "../../services/vault.ts";
 import { rebuildIndex, incrementalIndex } from "../../services/indexer.ts";
+import { loadConfig } from "../../services/config.ts";
+import { initTokenizer } from "../../services/tokenizer.ts";
 
 export const indexCommand = new Command("index")
   .description("FTS5検索インデックスを構築する")
@@ -21,6 +23,8 @@ export const indexCommand = new Command("index")
     }
 
     const paths = getVaultPaths(vaultRoot);
+    const config = loadConfig(paths);
+    initTokenizer(config.vault.language);
 
     if (options.force) {
       console.log("インデックスを全件再構築中...");

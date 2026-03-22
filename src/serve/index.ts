@@ -10,6 +10,8 @@ import { logger } from "hono/logger";
 import { serveStatic } from "hono/bun";
 import path from "path";
 import type { VaultPaths } from "../services/vault.ts";
+import { loadConfig } from "../services/config.ts";
+import { initTokenizer } from "../services/tokenizer.ts";
 import { dashboardRoute } from "./routes/dashboard.ts";
 import { notesRoute } from "./routes/notes.ts";
 import { searchRoute } from "./routes/search.ts";
@@ -22,6 +24,10 @@ import { apiRoute } from "./routes/api.ts";
  * テスト時にもこの関数を使ってアプリを作成できる。
  */
 export function createApp(paths: VaultPaths): Hono {
+  // 言語設定を読み込んでトークナイザーを初期化
+  const config = loadConfig(paths);
+  initTokenizer(config.vault.language);
+
   const app = new Hono();
 
   // ミドルウェア
