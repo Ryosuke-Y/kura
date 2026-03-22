@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+
+# Bun
+bun.lock
+
+# Build
+kura
+
+# Kura vault data (created by kura init)
+.kura/
+
+# Test artifacts
+.test-*-tmp/
+
+# IDE / editor settings
+.claude/
+.cursor/
+.serena/
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Personal development files
+CLAUDE.md
+GEMINI.md
+AGENTS.md
+docs/internal/
+docs/archive/
+
+# OS
+.DS_Store
+Thumbs.db
