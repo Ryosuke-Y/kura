@@ -1,0 +1,35 @@
+name: CI
+
+# mainブランチへのpushとPRでのみ実行（Actions分数の節約）
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # リポジトリのチェックアウト
+      - uses: actions/checkout@v4
+
+      # Bunのセットアップ（メジャーバージョンを固定して再現性を確保）
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.x"
+
+      # 依存パッケージのキャッシュ（bun.lockが変わらない限り再利用）
+      - uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+          restore-keys: |
+            bun-${{ runner.os }}-
+
+      # 依存インストール（lockfileとの不整合があれば失敗させる）
+      - run: bun install --frozen-lockfile
+
+      # テスト実行
+      - run: bun test
